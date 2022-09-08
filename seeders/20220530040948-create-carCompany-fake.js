@@ -12,7 +12,7 @@ module.exports = {
 		 * }], {});
 		 */
 		await queryInterface.bulkInsert(
-			"carcompanies",
+			"carCompanies",
 			[
 				{
 					name: "Nhà xe Phương Trang",

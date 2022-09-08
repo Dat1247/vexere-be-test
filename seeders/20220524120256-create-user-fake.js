@@ -12,7 +12,7 @@ module.exports = {
 		 * }], {});
 		 */
 		await queryInterface.bulkInsert(
-			"users",
+			"Users",
 			[
 				{
 					name: "Nguyễn Văn A",
