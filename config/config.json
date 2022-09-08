@@ -1,9 +1,9 @@
 {
 	"development": {
-		"username": "root",
-		"password": "quandat",
-		"database": "vexere_db",
-		"host": "127.0.0.1",
+		"username": "ujrchhxhl6ser6lm",
+		"password": "TgL0T72w0TRwAPidPBLf",
+		"database": "bx7snyzfbmm8h8twvjgs",
+		"host": "bx7snyzfbmm8h8twvjgs-mysql.services.clever-cloud.com",
 		"dialect": "mysql"
 	},
 	"test": {
@@ -15,7 +15,7 @@
 	},
 	"production": {
 		"username": "root",
-		"password": "quandat",
+		"password": null,
 		"database": "vexere_db",
 		"host": "127.0.0.1",
 		"dialect": "mysql"
