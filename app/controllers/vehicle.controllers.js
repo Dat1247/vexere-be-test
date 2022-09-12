@@ -58,12 +58,12 @@ const getTripList = async (req, res) => {
 	try {
 		if (search) {
 			const [results] = await sequelize.query(`
-				select vehicles.id as id, vehicles.name as vehicleName, vehicles.typeVehicle as typeVehicle, fromSta.name as fromStationName, toSta.name as toStationName,trips.startTime as startTime, trips.price as price, carcompanies.name as carCompanyName, vehicles.createdAt as createdAt, vehicles.updatedAt as updatedAt, vehicles.trip_id as trip_id, vehicles.carCompany_id as carCompany_id from vehicles
-				inner join trips on trips.id = vehicles.trip_id
-				inner join stations as fromSta on fromSta.id = trips.fromStation
-				inner join stations as toSta on toSta.id = trips.toStation
-				inner join carcompanies on carcompanies.id = vehicles.carCompany_id
-				where vehicles.name like '%${search}%' or fromSta.name like '%${search}%' or toSta.name like '%${search}%' or carcompanies.name like '%${search}%';
+				SELECT Vehicles.id AS id, Vehicles.name AS vehicleName, Vehicles.typeVehicle AS typeVehicle, fromSta.name AS fromStationName, toSta.name AS toStationName, Trips.startTime AS startTime, Trips.price AS price, carCompanies.name AS carCompanyName, Vehicles.createdAt AS createdAt, Vehicles.updatedAt AS updatedAt, Vehicles.trip_id AS trip_id, Vehicles.carCompany_id AS carCompany_id FROM Vehicles
+				INNER JOIN Trips ON Trips.id = Vehicles.trip_id
+				INNER JOIN Stations AS fromSta on fromSta.id = Trips.fromStation
+				INNER JOIN Stations AS toSta on toSta.id = Trips.toStation
+				INNER JOIN carCompanies ON carCompanies.id = Vehicles.carCompany_id
+				WHERE Vehicles.name LIKE '%${search}%' OR fromSta.name LIKE '%${search}%' OR toSta.name LIKE '%${search}%' OR carCompanies.name LIKE '%${search}%';
 			`);
 
 			res.status(200).send({
@@ -72,11 +72,11 @@ const getTripList = async (req, res) => {
 			});
 		} else {
 			const [results] = await sequelize.query(`
-			select vehicles.id as id, vehicles.name as vehicleName, vehicles.typeVehicle as typeVehicle, fromSta.name as fromStationName, toSta.name as toStationName,trips.startTime as startTime, trips.price as price, carcompanies.name as carCompanyName, vehicles.createdAt as createdAt, vehicles.updatedAt as updatedAt, vehicles.trip_id as trip_id, vehicles.carCompany_id as carCompany_id from vehicles
-			inner join trips on trips.id = vehicles.trip_id
-			inner join stations as fromSta on fromSta.id = trips.fromStation
-			inner join stations as toSta on toSta.id = trips.toStation
-			inner join carcompanies on carcompanies.id = vehicles.carCompany_id
+			SELECT Vehicles.id AS id, Vehicles.name AS vehicleName, Vehicles.typeVehicle AS typeVehicle, fromSta.name AS fromStationName, toSta.name AS toStationName, Trips.startTime AS startTime, Trips.price AS price, carCompanies.name AS carCompanyName, Vehicles.createdAt AS createdAt, Vehicles.updatedAt AS updatedAt, Vehicles.trip_id AS trip_id, Vehicles.carCompany_id AS carCompany_id FROM Vehicles
+				INNER JOIN Trips ON Trips.id = Vehicles.trip_id
+				INNER JOIN Stations AS fromSta on fromSta.id = Trips.fromStation
+				INNER JOIN Stations AS toSta on toSta.id = Trips.toStation
+				INNER JOIN carCompanies ON carCompanies.id = Vehicles.carCompany_id
 		`);
 
 			res.status(200).send({
