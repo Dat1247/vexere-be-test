@@ -14,6 +14,9 @@ const uploadImage = (type) => {
 
 	const upload = multer({
 		storage: storage,
+		limits: {
+			fileSize: 25000,
+		},
 		fileFilter: function (req, file, cb) {
 			const extensionImageList = [".png", ".jpg", ".JPG"];
 			const extension = file.originalname.slice(-4);
@@ -22,6 +25,10 @@ const uploadImage = (type) => {
 				cb(null, true);
 			} else {
 				cb(new Error("Extension invalid!"));
+			}
+			const fileSize = parseInt(req.headers["content-length"]);
+			if (fileSize > 25000) {
+				return cb(new Error("Size less 25KB"));
 			}
 		},
 	});

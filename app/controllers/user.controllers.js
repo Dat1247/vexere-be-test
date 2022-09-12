@@ -3,7 +3,6 @@ const { Op } = require("sequelize");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const gravatarUrl = require("gravatar-url");
-const e = require("express");
 
 const listTypeUser = [
 	{
@@ -105,15 +104,15 @@ const searchTicket = async (req, res) => {
 
 	try {
 		const [results] = await sequelize.query(`
-            select users.name as username,tickets.id as ticketId, fromStation.name as fromStation, toStation.name as toStation, vehicles.id as vehicleId,vehicles.name as vehicle, carcompanies.name as carCompany,seats.name as soGhe, price, startTime, tickets.createdAt, tickets.updatedAt from users
-            inner join tickets on users.id = tickets.user_id
-            inner join trips on trips.id = tickets.trip_id
-            inner join stations as fromStation on fromStation.id = trips.fromStation
-            inner join stations as toStation on toStation.id = trips.toStation
-            inner join seats on seats.ticket_id = tickets.id
-            inner join vehicles on vehicles.id = seats.vehicle_id
-            inner join carcompanies on carcompanies.id = vehicles.carCompany_id
-            where users.id = ${id};
+            SELECT Users.name AS username, Tickets.id AS ticketId, fromStation.name AS fromStation, toStation.name AS toStation, Vehicles.id AS vehicleId, Vehicles.name AS vehicle, carCompanies.name AS carCompany, Seats.name AS soGhe, price, startTime, Tickets.createdAt, Tickets.updatedAt FROM Users
+            INNER JOIN Tickets ON Users.id = Tickets.user_id
+            INNER JOIN Trips ON Trips.id = Tickets.trip_id
+            INNER JOIN Stations AS fromStation ON fromStation.id = Trips.fromStation
+            INNER JOIN Stations AS toStation ON toStation.id = Trips.toStation
+            INNER JOIN Seats ON Seats.ticket_id = Tickets.id
+            INNER JOIN Vehicles ON Vehicles.id = Seats.vehicle_id
+            INNER JOIN carCompanies ON carCompanies.id = Vehicles.carCompany_id
+            WHERE Users.id = ${id};
         `);
 		res.status(200).send({
 			message: "Search trip successfully!",

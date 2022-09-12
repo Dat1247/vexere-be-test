@@ -6,12 +6,11 @@ const {
 	updateCarCompany,
 	deleteCarCompany,
 } = require("../controllers/car-company.controllers");
-const { carCompany, Vehicle } = require("../../models");
+const { carCompany } = require("../../models");
 const { uploadImage } = require("../middlewares/upload/uploadImage");
 const { checkExists } = require("../middlewares/validations/checkExist");
 const { authenticate } = require("../middlewares/auth/authenticate");
 const { authorize } = require("../middlewares/auth/authorize");
-const { checkDelete } = require("../middlewares/validations/checkDeleteUser");
 const {
 	checkDeleteCompany,
 } = require("../middlewares/validations/checkDeleteCompany");

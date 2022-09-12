@@ -125,20 +125,19 @@ const searchTripsByFromStaAndToSta = async (req, res) => {
 	console.log({ fromSta, toSta, timeStart, timeEnd });
 	try {
 		const [results] = await sequelize.query(`
-		select trips.id as tripId, trips.startTime, trips.price, 
-		fromSta.name as fromSta, fromSta.address as fromAddress, fromSta.province as fromProvince,  
-		toSta.name as toSta, toSta.address as toAddress, toSta.province as toProvince, 
-		vehicles.name as vehicleName, vehicles.typeVehicle as typeVehicle, vehicles.id as vehicleId, 
-		company.name as companyCarName, company.image as companyCarImage, 
-		seats.name as seatName, seats.status as statusSeat, count(seats.status) as seatRemaining
-		from trips
-			  inner join stations as fromSta on fromSta.id = trips.fromStation
-			  inner join stations as toSta on toSta.id = trips.toStation
-			  inner join vehicles on trips.id = vehicles.trip_id
-			  left join seats on seats.vehicle_id = vehicles.id
-			  inner join carcompanies as company on company.id = vehicles.carCompany_id
-			  where fromSta.province = '${fromSta}' && toSta.province = '${toSta}' && trips.startTime >= '${timeStart}' &&  trips.startTime <= '${timeEnd}' && seats.status = false
-			  group by vehicles.id;
+		SELECT Trips.id AS tripId, Trips.startTime, Trips.price, 
+		fromSta.name AS fromSta, fromSta.address AS fromAddress, fromSta.province AS fromProvince,  
+		toSta.name AS toSta, toSta.address AS toAddress, toSta.province AS toProvince, 
+		Vehicles.name AS vehicleName, Vehicles.typeVehicle AS typeVehicle, Vehicles.id AS vehicleId, 
+		company.name AS companyCarName, company.image AS companyCarImage, 
+		Seats.name AS seatName, Seats.status AS statusSeat, count(Seats.status) AS seatRemaining FROM Trips
+			  INNER JOIN Stations AS fromSta ON fromSta.id = Trips.fromStation
+			  INNER JOIN Stations AS toSta ON toSta.id = Trips.toStation
+			  INNER JOIN Vehicles ON Trips.id = Vehicles.trip_id
+			  LEFT JOIN Seats ON Seats.vehicle_id = Vehicles.id
+			  INNER JOIN carCompanies AS company ON company.id = Vehicles.carCompany_id
+			  WHERE fromSta.province = '${fromSta}' && toSta.province = '${toSta}' && Trips.startTime >= '${timeStart}' &&  Trips.startTime <= '${timeEnd}' && Seats.status = false
+			  group by Vehicles.id;
         `);
 		res.status(200).send({
 			message: "Search trip successfully!",
