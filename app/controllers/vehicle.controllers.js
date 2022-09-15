@@ -164,7 +164,7 @@ const createVehicleWithSeat = async (req, res) => {
 
 		let numberSeats = 0;
 		if (typeVehicle === "GN") {
-			numberSeats = 25;
+			numberSeats = 24;
 		} else {
 			numberSeats = 45;
 		}
