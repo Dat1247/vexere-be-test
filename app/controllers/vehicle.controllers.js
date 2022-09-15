@@ -92,25 +92,18 @@ const getTripList = async (req, res) => {
 const getVehicleDetails = async (req, res) => {
 	const { id } = req.params;
 	try {
+		const [result] = await sequelize.query(`
+			SELECT Vehicles.id AS id, Vehicles.name AS vehicleName, Vehicles.typeVehicle AS typeVehicle, fromSta.name AS fromStationName, toSta.name AS toStationName, Trips.startTime AS startTime, Trips.price AS price, carCompanies.name AS carCompanyName, Vehicles.createdAt AS createdAt, Vehicles.updatedAt AS updatedAt, Vehicles.trip_id AS trip_id, Vehicles.carCompany_id AS carCompany_id FROM Vehicles
+				INNER JOIN Trips ON Trips.id = Vehicles.trip_id
+				INNER JOIN Stations AS fromSta on fromSta.id = Trips.fromStation
+				INNER JOIN Stations AS toSta on toSta.id = Trips.toStation
+				INNER JOIN carCompanies ON carCompanies.id = Vehicles.carCompany_id
+				WHERE Vehicles.id = ${id}
+		`);
 
-		const vehicle = await Vehicle.findOne({
-			include: [
-				{
-					model: Trip,
-					as: "trip",
-				},
-				{
-					model: carCompany,
-					as: "carCompany",
-				},
-			],
-			where: {
-				id
-			}
-		});
 		res.status(200).send({
 			message: "Get vehicle details successfully!",
-			data: vehicle,
+			data: result,
 		});
 	} catch (err) {
 		res.status(500).send(err);
