@@ -90,8 +90,24 @@ const getTripList = async (req, res) => {
 };
 
 const getVehicleDetails = async (req, res) => {
+	const { id } = req.params;
 	try {
-		const vehicle = req.item;
+
+		const vehicle = await Vehicle.findOne({
+			include: [
+				{
+					model: Trip,
+					as: "trip",
+				},
+				{
+					model: carCompany,
+					as: "carCompany",
+				},
+			],
+			where: {
+				id
+			}
+		});
 		res.status(200).send({
 			message: "Get vehicle details successfully!",
 			data: vehicle,
